@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Tickets</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 col-md-offset-0">
+				<h2>Quick reservation</h2>
+				<table th:object="${tickets}" class="table">
+					<tr>
+				        <th>Movie</th>
+				        <th>Date</th>
+				        <th>Time</th>
+				        <!--<th>Hall</th>-->
+				        <!--<th>Seat</th>-->
+				        <th>Price</th>
+				        <th>Discount</th>
+				        <th th:if="${session.email} != null">Action</th>
+				    </tr>
+			    	<tr th:each="ticket :${tickets}">
+				        <td th:text="${ticket.getMovieTicket().getName()}"></td>
+				        <td th:text="${#dates.format(ticket.getDate(), 'dd.MM.yyyy')}"></td>
+				        <td th:text="${ticket.getTime()}"></td>
+				        <!-- <td th:text="${ticket.getAverageRate()}"></td> -->
+				        <!-- <td th:text="${cinema.getCinemaType().getName()}"></td> -->
+				        <td th:text="${ticket.getPrice()}"></td>
+				        <td th:text="${ticket.getDiscount()}"></td>
+				        <td th:if="${session.email} != null">
+				        	<a th:if="${session.role} == 'STANDARD' and !${ticket.isReserved()}" th:href="@{/tickets/reserve(id=${ticket.id})}" class="btn btn-default">Reserve</a>
+				        </td>
+				    </tr>
+				</table>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

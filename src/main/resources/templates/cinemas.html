@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Cinemas</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 col-md-offset-0">
+				<h2>Cinemas</h2>
+				<a th:if="${session.email} == null" th:href="@{/registration}" class="btn btn-primary">Register</a>
+				<a th:if="${session.email} == null" th:href="@{/login}" class="btn btn-default">Login</a>
+				<a th:if="${session.email} != null and ${session.role} == 'ADMIN'" th:text="${session.email}" th:href="@{/edit(email=${session.email})}"></a>
+				<a th:if="${session.email} != null" th:href="@{/logout}" class="btn btn-default">Logout</a>
+				<table th:object="${cinemas}" class="table">
+					<tr>
+				        <th>Name</th>
+				        <th>Address</th>
+				        <th>Description</th>
+				        <th>Average rate</th>
+				        <th>Type</th>
+				        <th th:if="${session.email} != null">Action</th>
+				    </tr>
+			    	<tr th:each="cinema :${cinemas}">
+				        <td th:text="${cinema.getName()}"></td>
+				        <td th:text="${cinema.getAddress()}"></td>
+				        <td th:text="${cinema.getPromoDescription()}"></td>
+				        <td th:text="${cinema.getAverageRate()}"></td>
+				        <td th:text="${cinema.getCinemaType().getName()}"></td>
+				        <td th:if="${session.email} != null">
+				        	<a th:if="${session.role} == 'ADMIN'" th:href="@{/cinemas/edit(id=${cinema.id})}" class="btn btn-default">Edit</a>
+				        	<a th:if="${session.role} == 'ADMIN'" th:href="@{/cinemas/delete(id=${cinema.id})}" class="btn btn-danger">Delete</a>
+				        	<a th:if="${session.role} == 'STANDARD'" th:href="@{/cinemas/vote(id=${cinema.id})}" class="btn btn-default">Vote</a>
+				        	<a th:href="@{/movies(id=${cinema.id})}" class="btn btn-default">Details</a>
+				        </td>
+				    </tr>
+				</table>
+				
+				<div class="float-right" th:if="${session.email} != null and ${session.role} == 'ADMIN'">
+					<a th:href="@{/cinemas/add}" class="btn btn-default">Add</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

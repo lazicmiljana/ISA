@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Cinemas</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 col-md-offset-0">
+				<h2>Movies</h2>
+				<a th:href="@{/cinemas}">Cinemas</a>
+				<table th:object="${movies}" class="table">
+					<tr>
+						<th>Poster</th>
+				        <th>Name</th>
+				        <th>Genre</th>
+				        <th>Director</th>
+				        <th>Duration</th>
+				        <th>Rate</th>
+				        <th>Action</th>
+				    </tr>
+			    	<tr th:each="movie :${movies}">
+			    		<td><img th:src="${movie.getPoster()}"/></td>
+			    		<td th:text="${movie.getName()}"></td>
+			    		<td th:text="${movie.getGenreMovie().getName()}"></td>
+			    		<td th:text="${movie.getDirector()}"></td>
+			    		<td th:text="${movie.getLength()}"></td>
+			    		<td th:text="${movie.getRate()}"></td>
+				        <td>
+				        	<a th:if="${session.role} == 'ADMIN'" th:href="@{/movies/edit(id=${movie.id})}" class="btn btn-default">Edit</a>
+				        	<a th:if="${session.role} == 'ADMIN'" th:href="@{/movies/delete(id=${movie.id}, cinemaId=${session.cinemaId})}" class="btn btn-danger">Delete</a>
+				        	<a th:if="${session.role} == 'STANDARD'" th:href="@{/movies/vote(id=${movie.id})}" class="btn btn-default">Vote</a>
+				        	<a th:if="${session.role} == 'STANDARD'" th:href="@{/tickets(id=${movie.id})}" class="btn btn-default">Tickets</a>
+				        </td>
+				    </tr>
+				</table>
+				
+				<div class="float-right" th:if="${session.email} != null and ${session.role} == 'ADMIN'">
+					<a th:href="@{/movies/add(cinemaId=${session.cinemaId})}" class="btn btn-default">Add</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

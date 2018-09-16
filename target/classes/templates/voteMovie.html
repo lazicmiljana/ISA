@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Vote for movies</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<form th:action="@{/movies(id=${session.campaignId})}" method="get">
+		<button class="btn btn-md btn-warning btn-block" type="Submit">Go To Movies</button>
+	</form>	
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<form autocomplete="off" action="#" th:action="@{/movies/vote}"
+					th:object="${movie}" method="post" class="form-horizontal"
+					role="form">
+					<h2>Vote for cinema</h2>
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="hidden" id="id" name="id" th:value="${movie.id}"
+								class="form-control"/> <br/> 
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" id="name" name="name" th:value="${movie.name}"
+								class="form-control" readonly="readonly"/> <br/> 
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="number" th:placeholder="Rate" id="rate" name="rate" class="form-control" />
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="hidden" id="cinemaId" name="cinemaId" th:value="${session.cinemaId}"	class="form-control"/>
+						</div>
+					</div>
+						
+					<div class="form-group">
+						<div class="col-sm-9">
+							<button type="submit" class="btn btn-primary btn-block">Vote</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

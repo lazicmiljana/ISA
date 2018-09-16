@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: cinema
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: Jovan Tukic
+Implementation-Vendor-Id: com.ftn.isa
+Build-Jdk: 1.8.0_71
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/cinema
+Created-By: Maven Integration for Eclipse
+

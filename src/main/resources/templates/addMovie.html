@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Add Movie Form</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<h2>Add Movie</h2>
+				<form method="POST" action="/movies/upload-file" enctype="multipart/form-data">
+				    <input type="file" name="file" />
+				    <input type="submit" value="Submit" />
+				</form>
+				<form autocomplete="off" action="#" th:action="@{/movies/add}"
+					th:object="${movie}" method="post" class="form-horizontal"
+					role="form">
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="hidden" th:field="*{id}"/> 
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<img th:src="*{poster}"/>
+							<input type="hidden" th:field="*{poster}"/> 
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" th:field="*{name}" placeholder="Name"
+									class="form-control" /> 
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<select class="form-control" th:field="*{genreId}">
+					    		<option th:each="g: *{genres}" th:value="${g.id}" th:text="${g.name}" ></option>
+					    	</select>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+							<select th:field="*{selectedActorIds}" class="form-control" multiple>
+					            <option th:each="a : *{actors}"                                        
+					                    th:value="${a.id}"
+					                    th:text="${a.name}"
+					                   >               
+					            </option>
+					        </select>   
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" th:field="*{director}" placeholder="Director"
+									class="form-control" /> 
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" th:field="*{length}" placeholder="Length"
+									class="form-control" /> 
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" th:field="*{description}" placeholder="Description"
+									class="form-control" /> 
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" th:field="*{time}" placeholder="Time"
+									class="form-control" /> 
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" th:field="*{price}" placeholder="Price"
+									class="form-control" /> 
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-9">
+							<button type="submit" class="btn btn-primary btn-block">Add new movie</button>
+						</div>
+					</div>
+					
+					<span th:utext="${successMessage}"></span>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
